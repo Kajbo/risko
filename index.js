@@ -1,7 +1,6 @@
 // Copyright (c) 2014 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
-
 // extract from chromium source code by @liuwayong
 (function () {
     'use strict';
@@ -40,6 +39,7 @@
 
         this.time = 0;
         this.runningTime = 0;
+        this.vaccines = 0;
         this.msPerFrame = 1000 / FPS;
         this.currentSpeed = this.config.SPEED;
 
@@ -497,6 +497,7 @@
          */
         startGame: function () {
             this.runningTime = 0;
+            this.vaccines = 0;
             this.playingIntro = false;
             this.tRex.playingIntro = false;
             this.containerEl.style.webkitAnimation = '';
@@ -563,7 +564,14 @@
                         this.currentSpeed += this.config.ACCELERATION;
                     }
                 } else {
-                    this.gameOver();
+                    if (this.horizon.obstacles[0].typeConfig.type == 'PTERODACTYL') {
+                        this.horizon.removeFirstObstacle();
+                        console.warn('ZOBRAL VAKCINU');
+                        this.vaccines++;
+                        console.warn("celkom vakcin", this.vaccines);
+                    } else {
+                        this.gameOver();
+                    }
                 }
 
                 var playAchievementSound = this.distanceMeter.update(deltaTime,
@@ -820,6 +828,7 @@
             if (!this.raqId) {
                 this.playCount++;
                 this.runningTime = 0;
+                this.vaccines = 0;
                 this.playing = true;
                 this.crashed = false;
                 this.distanceRan = 0;
@@ -1041,6 +1050,7 @@
             }
         },
 
+        //drawFunction
         /**
          * Draw the panel.
          */
@@ -1326,6 +1336,7 @@
                 this.gap = this.getGap(this.gapCoefficient, speed);
             },
 
+            //drawFunction
             /**
              * Draw and crop based on size.
              */
@@ -1677,6 +1688,7 @@
             }
         },
 
+        //drawFunction
         /**
          * Draw the t-rex to a particular position.
          * @param {number} x
@@ -1865,6 +1877,7 @@
         this.currentDistance = 0;
         this.maxScore = 0;
         this.highScore = 0;
+        this.vaccines = 0;
         this.container = null;
 
         this.digits = [];
@@ -1948,6 +1961,7 @@
                 (this.maxScoreUnits + 1));
         },
 
+        //drawFunction
         /**
          * Draw a digit to canvas.
          * @param {number} digitPos Position of the digit.
@@ -2005,6 +2019,7 @@
         },
 
         /**
+         * SCORE UPDATE
          * Update the distance meter.
          * @param {number} distance
          * @param {number} deltaTime
@@ -2071,6 +2086,7 @@
             return playSound;
         },
 
+        //drawFunction
         /**
          * Draw the high score.
          */
@@ -2154,6 +2170,7 @@
             this.draw();
         },
 
+        //drawFunction
         /**
          * Draw the cloud.
          */
@@ -2288,6 +2305,7 @@
             return currentPos;
         },
 
+        //drawFunction
         draw: function () {
             var moonSourceWidth = this.currentPhase == 3 ? NightMode.config.WIDTH * 2 :
                 NightMode.config.WIDTH;
@@ -2425,6 +2443,7 @@
             return Math.random() > this.bumpThreshold ? this.dimensions.WIDTH : 0;
         },
 
+        //drawFunction
         /**
          * Draw the horizon line.
          */
