@@ -13,7 +13,7 @@ function DistanceMeter(canvas, spritePos, canvasWidth) {
     this.x = 0;
     this.y = 5;
 
-    this.currentDistance = 0;
+    //this.currentDistance = 0;
     this.maxScore = 0;
     this.highScore = 0;
     this.vaccines = 0;
@@ -179,9 +179,9 @@ DistanceMeter.prototype = {
                 this.distance = 0;
             }
 
-            if (distance > 0) {
+            if (this.defaultString + window['Runner'].instance_.vaccines > 0) {
                 // Acheivement unlocked
-                if (distance % this.config.ACHIEVEMENT_DISTANCE == 0) {
+                if (distance % this.config.ACHIEVEMENT_DISTANCE == -9) {
                     // Flash score and play sound.
                     this.acheivement = true;
                     this.flashTimer = 0;
@@ -189,8 +189,7 @@ DistanceMeter.prototype = {
                 }
 
                 // Create a string representation of the distance with leading 0.
-                var distanceStr = (this.defaultString +
-                    distance).substr(-this.maxScoreUnits);
+                var distanceStr = (this.defaultString + window['Runner'].instance_.vaccines).substr(-this.maxScoreUnits);
                 this.digits = distanceStr.split('');
             } else {
                 this.digits = this.defaultString.split('');
@@ -245,8 +244,7 @@ DistanceMeter.prototype = {
      */
     setHighScore: function (distance) {
         distance = this.getActualDistance(distance);
-        var highScoreStr = (this.defaultString +
-            distance).substr(-this.maxScoreUnits);
+        var highScoreStr = (this.defaultString + window['Runner'].instance_.vaccines).substr(-this.maxScoreUnits);
 
         this.highScore = ['10', '11', ''].concat(highScoreStr.split(''));
     },

@@ -434,7 +434,7 @@ Runner.prototype = {
             if (this.playing || this.crashed || this.paused) {
                 this.containerEl.style.width = this.dimensions.WIDTH + 'px';
                 this.containerEl.style.height = this.dimensions.HEIGHT + 'px';
-                this.distanceMeter.update(0, Math.ceil(this.distanceRan));
+                this.distanceMeter.update(0, Math.ceil(this.vaccines));
                 this.stop();
             } else {
                 this.tRex.draw(0, 0);
@@ -562,14 +562,12 @@ Runner.prototype = {
                     this.horizon.removeFirstObstacle();
                     console.warn('ZOBRAL VAKCINU');
                     this.vaccines++;
-                    console.warn("celkom vakcin", this.vaccines);
                 } else {
                     this.gameOver();
                 }
             }
 
-            var playAchievementSound = this.distanceMeter.update(deltaTime,
-                Math.ceil(this.distanceRan));
+            var playAchievementSound = this.distanceMeter.update(deltaTime, Math.ceil(this.vaccines));
 
             if (playAchievementSound) {
                 this.playSound(this.soundFx.SCORE);
@@ -583,9 +581,9 @@ Runner.prototype = {
             } else if (this.invertTimer) {
                 this.invertTimer += deltaTime;
             } else {
-                var actualDistance =
-                    this.distanceMeter.getActualDistance(Math.ceil(this.distanceRan));
-
+                
+                var actualDistance = this.distanceMeter.getActualDistance(Math.ceil(this.distanceRan)); // ??? naco to je
+                
                 if (actualDistance > 0) {
                     this.invertTrigger = !(actualDistance %
                         this.config.INVERT_DISTANCE);
@@ -792,8 +790,8 @@ Runner.prototype = {
         }
 
         // Update the high score.
-        if (this.distanceRan > this.highestScore) {
-            this.highestScore = Math.ceil(this.distanceRan);
+        if (this.vaccines > this.highestScore) {
+            this.highestScore = Math.ceil(this.vaccines);
             this.distanceMeter.setHighScore(this.highestScore);
         }
 
