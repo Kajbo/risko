@@ -59,7 +59,7 @@ DistanceMeter.config = {
     MAX_DISTANCE_UNITS: 5,
 
     // Distance that causes achievement animation.
-    ACHIEVEMENT_DISTANCE: 100,
+    ACHIEVEMENT_DISTANCE: 10,
 
     // Used for conversion from pixel distance to a scaled unit.
     COEFFICIENT: 0.025,
@@ -181,7 +181,7 @@ DistanceMeter.prototype = {
 
             if (this.defaultString + window['Runner'].instance_.vaccines > 0) {
                 // Acheivement unlocked
-                if (distance % this.config.ACHIEVEMENT_DISTANCE == -9) {
+                if (this.defaultString + window['Runner'].instance_.vaccines % this.config.ACHIEVEMENT_DISTANCE == 0) {
                     // Flash score and play sound.
                     this.acheivement = true;
                     this.flashTimer = 0;
